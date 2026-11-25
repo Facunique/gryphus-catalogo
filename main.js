@@ -27,6 +27,12 @@ const ui = {
   precio: $('panel-precio'),
   cta: $('panel-cta'),
   indice: $('indice'),
+  nav: document.querySelector('.indice'),
+  abrirIndice: $('abrir-indice'),
+  cerrarIndice: $('cerrar-indice'),
+  fondoHoja: $('fondo-hoja'),
+  anterior: $('anterior'),
+  siguiente: $('siguiente'),
   cambiarTema: $('cambiar-tema'),
 };
 
@@ -270,10 +276,24 @@ function construirIndice() {
       const item = document.createElement('li');
       const b = document.createElement('button');
       b.type = 'button';
-      b.textContent = datos.corto ?? datos.nombre;
+      // Nombre corto para la tira de la compu, nombre completo para la hoja del celular
+      const corto = document.createElement('span');
+      corto.className = 'corto';
+      corto.textContent = datos.corto ?? datos.nombre;
+      corto.setAttribute('aria-hidden', 'true');
+      const largo = document.createElement('span');
+      largo.className = 'largo';
+      largo.textContent = datos.nombre;
+      b.append(corto, largo);
+      b.setAttribute('aria-label', datos.nombre);
       b.title = datos.nombre;
       b.dataset.id = datos.id;
-      b.addEventListener('click', () => (enfocado === datos.id ? volver() : enfocar(datos.id)));
+      b.addEventListener('click', () => {
+        const enHoja = ui.nav.classList.contains('abierto');
+        cerrarHoja({ devolverFoco: false });
+        if (enfocado === datos.id && !enHoja) volver();
+        else if (enfocado !== datos.id) enfocar(datos.id);
+      });
       item.appendChild(b);
       lista.appendChild(item);
     }
@@ -281,6 +301,36 @@ function construirIndice() {
     ui.indice.appendChild(li);
   }
 }
+
+// ---------- Hoja del índice (celular) y flechas del panel ----------
+
+function abrirHoja() {
+  ui.nav.classList.add('abierto');
+  ui.fondoHoja.hidden = false;
+  ui.abrirIndice.setAttribute('aria-expanded', 'true');
+  (ui.indice.querySelector('button[aria-current="true"]') ?? ui.cerrarIndice).focus({ preventScroll: true });
+}
+
+function cerrarHoja({ devolverFoco = true } = {}) {
+  if (!ui.nav.classList.contains('abierto')) return;
+  ui.nav.classList.remove('abierto');
+  ui.fondoHoja.hidden = true;
+  ui.abrirIndice.setAttribute('aria-expanded', 'false');
+  if (devolverFoco) ui.abrirIndice.focus({ preventScroll: true });
+}
+
+ui.abrirIndice.addEventListener('click', abrirHoja);
+ui.cerrarIndice.addEventListener('click', () => cerrarHoja());
+ui.fondoHoja.addEventListener('click', () => cerrarHoja());
+
+function pasar(paso) {
+  const ids = [...productos.keys()];
+  if (!enfocado || !ids.length) return;
+  const i = ids.indexOf(enfocado);
+  enfocar(ids[(i + paso + ids.length) % ids.length]);
+}
+ui.anterior.addEventListener('click', () => pasar(-1));
+ui.siguiente.addEventListener('click', () => pasar(1));
 
 // ---------- Mascota: vuela en círculos y guía la cámara ----------
 
@@ -460,7 +510,11 @@ renderer.domElement.addEventListener('pointerup', (ev) => {
   else if (!id && enfocado) volver();
 });
 
-addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && enfocado) volver(); });
+addEventListener('keydown', (ev) => {
+  if (ev.key !== 'Escape') return;
+  if (ui.nav.classList.contains('abierto')) cerrarHoja();
+  else if (enfocado) volver();
+});
 ui.volver.addEventListener('click', () => volver());
 
 // ---------- Foco con hilo ----------
@@ -501,7 +555,16 @@ function encuadre(raiz) {
   const fovV = THREE.MathUtils.degToRad(camara.fov);
   const angosto = camara.aspect < 1;
   const fovEfectivo = angosto ? 2 * Math.atan(Math.tan(fovV / 2) * camara.aspect) : fovV;
-  const distancia = (_esfera.radius / Math.sin(fovEfectivo / 2)) * (angosto ? 1.4 : 1.85);
+  let distancia = (_esfera.radius / Math.sin(fovEfectivo / 2)) * (angosto ? 1.4 : 1.85);
+  // En celular el panel ocupa la parte de abajo: el producto tiene que entrar
+  // en el espacio libre entre la barra superior y el panel.
+  const ALTO_BARRA = 70;
+  const topePanel = innerHeight - 84 - (ui.panel.offsetHeight || innerHeight * 0.45);
+  if (innerWidth <= 760) {
+    const libre = Math.max(topePanel - ALTO_BARRA, innerHeight * 0.25);
+    const medioAngulo = Math.atan(Math.tan(fovV / 2) * (libre / innerHeight));
+    distancia = Math.max(distancia, (_esfera.radius / Math.sin(medioAngulo)) * 1.1);
+  }
 
   const frente = new THREE.Vector3(Math.sin(raiz.rotation.y), 0, Math.cos(raiz.rotation.y));
   const elevacion = 0.34;
@@ -519,8 +582,8 @@ function encuadre(raiz) {
     const anchoPanel = ui.panel.offsetWidth || 380;
     corrimiento.addScaledVector(derecha, ((anchoPanel / 2 + 16) / (innerWidth / 2)) * medioAlto * camara.aspect);
   } else {
-    const altoPanel = ui.panel.offsetHeight || innerHeight * 0.45;
-    corrimiento.addScaledVector(arriba, -((altoPanel / 2 + 42) / (innerHeight / 2)) * medioAlto);
+    const yDeseada = (ALTO_BARRA + topePanel) / 2; // centro del espacio libre
+    corrimiento.addScaledVector(arriba, -((innerHeight / 2 - yDeseada) / (innerHeight / 2)) * medioAlto);
   }
   posicion.add(corrimiento);
   objetivo.add(corrimiento);

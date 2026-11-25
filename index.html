@@ -46,6 +46,10 @@
       <div class="panel-cabecera">
         <button id="volver" class="volver" type="button" aria-label="Volver a la vista general">← Volver</button>
         <p id="panel-categoria" class="categoria"></p>
+        <span class="pasar">
+          <button id="anterior" class="flecha" type="button" aria-label="Producto anterior">‹</button>
+          <button id="siguiente" class="flecha" type="button" aria-label="Producto siguiente">›</button>
+        </span>
       </div>
       <h1 id="panel-nombre"></h1>
       <p id="panel-resumen" class="resumen"></p>
@@ -56,7 +60,18 @@
 
     <!-- Lista accesible y sin 3D, agrupada por zona: sirve para teclado, lectores de pantalla, buscadores y equipos sin WebGL -->
     <nav class="indice" aria-label="Productos">
-      <ul id="indice"></ul>
+      <!-- En celular el índice se abre como una hoja desde abajo con este botón -->
+      <button id="abrir-indice" class="abrir-indice" type="button" aria-expanded="false" aria-controls="indice-hoja">
+        <span aria-hidden="true">☰</span> Ver productos
+      </button>
+      <div id="fondo-hoja" class="fondo-hoja" hidden></div>
+      <div id="indice-hoja" class="indice-hoja">
+        <div class="hoja-cabecera">
+          <span class="hoja-titulo">Productos</span>
+          <button id="cerrar-indice" class="cerrar-indice" type="button" aria-label="Cerrar la lista de productos">✕</button>
+        </div>
+        <ul id="indice"></ul>
+      </div>
     </nav>
   </main>
 

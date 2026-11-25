@@ -163,7 +163,9 @@ html, body {
   to   { opacity: 1; transform: translate(0, -50%); }
 }
 /* Región común: el encabezado agrupa volver + categoría; la lista va separada */
-.panel-cabecera { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.panel-cabecera { display: flex; align-items: center; gap: 8px; }
+.panel-cabecera .categoria { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.volver { flex-shrink: 0; }
 .panel h1 { margin: 14px 0 8px; font-size: 28px; line-height: 1.1; }
 .categoria {
   margin: 0;
@@ -206,7 +208,7 @@ html, body {
   color: var(--texto);
   padding: 5px 14px;
 }
-.volver:hover { background: var(--linea); }
+@media (hover: hover) { .volver:hover { background: var(--linea); } }
 .cta {
   display: inline-block;
   font-size: 19px;
@@ -225,7 +227,7 @@ html, body {
   padding: 14px 16px 18px;
   overflow-x: auto;
 }
-.indice > ul {
+#indice {
   display: flex;
   gap: 22px;
   justify-content: center;
@@ -234,7 +236,7 @@ html, body {
   list-style: none;
   min-width: max-content;
 }
-.indice > ul { gap: 10px !important; }
+#indice { gap: 10px !important; }
 /* Región común: cada zona es una "bandeja" que agrupa sus productos */
 .zona {
   display: flex;
@@ -269,7 +271,30 @@ html, body {
   white-space: nowrap;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
-.indice button:hover { box-shadow: inset 0 -3px 0 var(--acento); }
+@media (hover: hover) { .indice button:hover { box-shadow: inset 0 -3px 0 var(--acento); } }
+.indice .largo { display: none; }
+
+/* Botón y hoja del índice: solo existen en celular (ver la media query) */
+.abrir-indice, .hoja-cabecera, .fondo-hoja { display: none; }
+
+/* Flechas para pasar de producto sin volver al índice */
+.pasar { display: inline-flex; gap: 6px; margin-left: auto; flex-shrink: 0; }
+.flecha {
+  font: inherit;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  padding: 0 0 3px;
+  background: transparent;
+  color: var(--texto);
+  border: 2px solid var(--borde);
+  border-radius: 50%;
+  cursor: pointer;
+}
+@media (hover: hover) { .flecha:hover { background: var(--linea); } }
+.flecha:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
 .indice button[aria-current="true"] {
   background: var(--chip-activo);
   color: var(--chip-activo-texto);
@@ -307,10 +332,109 @@ html, body {
   .detalles li { padding: 4px 0 4px 20px; }
   .detalles li::before { top: 11px; }
   .precio { font-size: 16px; margin-bottom: 10px; }
-  .indice > ul { justify-content: flex-start; gap: 16px; }
+
+  /* Índice: un botón abajo que abre la lista completa como hoja */
+  .indice { padding: 0; overflow: visible; }
+  .indice .abrir-indice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    z-index: 5;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 800;
+    background: var(--texto);
+    color: var(--fondo);
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 22px;
+    min-height: 48px;
+    box-shadow: var(--sombra);
+    cursor: pointer;
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
+  .abrir-indice:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
+  .fondo-hoja {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 6;
+    background: rgba(21, 40, 74, 0.35);
+  }
+  .fondo-hoja[hidden] { display: none; }
+  .indice-hoja {
+    position: fixed;
+    z-index: 7;
+    left: 0; right: 0; bottom: 0;
+    max-height: 75vh;
+    overflow-y: auto;
+    background: var(--superficie);
+    color: var(--texto);
+    border-top: 2px solid var(--borde);
+    border-radius: 22px 22px 0 0;
+    box-shadow: var(--sombra);
+    padding: 8px 16px calc(20px + env(safe-area-inset-bottom));
+    transform: translateY(105%);
+    visibility: hidden;
+    transition: transform 0.32s ease, visibility 0s linear 0.32s, background-color 0.6s ease;
+  }
+  .indice.abierto .indice-hoja {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.32s ease, background-color 0.6s ease;
+  }
+  .hoja-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 4px;
+  }
+  .hoja-titulo { font-size: 20px; font-weight: 800; }
+  .indice .cerrar-indice {
+    font: inherit;
+    font-size: 18px;
+    width: 44px; height: 44px;
+    background: transparent;
+    color: var(--texto);
+    border: 2px solid var(--borde);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  /* Zonas apiladas, cada una con su título y sus productos en dos columnas */
+  #indice { display: block; min-width: 0; }
+  .indice .zona {
+    display: block;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--linea);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 12px 0 14px;
+  }
+  .indice .zona-nombre { display: block; margin: 0 0 8px; font-size: 12px; }
+  .zona ul { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .indice .zona button {
+    width: 100%;
+    min-height: 52px;
+    font-size: 15px;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.2;
+    border-radius: 14px;
+    padding: 10px 12px;
+  }
+  .indice .corto { display: none; }
+  .indice .largo { display: inline; }
+  .flecha { width: 40px; height: 40px; }
+  .volver { padding: 6px 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .panel { animation: none; }
+  .indice-hoja, .indice.abierto .indice-hoja { transition: none; }
   html, body, .panel, .marca { transition: none; }
 }
