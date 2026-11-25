@@ -150,6 +150,12 @@ function actualizarTema(dt) {
 }
 
 ui.cambiarTema.addEventListener('click', alternarTema);
+// El logo de la barra lleva siempre a la vista general
+document.getElementById('ir-inicio').addEventListener('click', (ev) => {
+  ev.preventDefault();
+  cerrarHoja({ devolverFoco: false });
+  if (enfocado) volver();
+});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   let guardado = null;
   try { guardado = localStorage.getItem('tema'); } catch { /* nada */ }

@@ -36,6 +36,22 @@ function mesh(geo, material, { x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0 } = {
   return m;
 }
 
+/** Textura a partir de una imagen (sirve para SVG): se dibuja en un canvas cuando carga. */
+function texturaDeImagen(url, lado = 512) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = lado;
+  const textura = new THREE.CanvasTexture(canvas);
+  textura.colorSpace = THREE.SRGBColorSpace;
+  textura.anisotropy = 4;
+  const img = new Image();
+  img.onload = () => {
+    canvas.getContext('2d').drawImage(img, 0, 0, lado, lado);
+    textura.needsUpdate = true;
+  };
+  img.src = url;
+  return textura;
+}
+
 const caja = (w, h, d, material, pos, r = 0.01) =>
   mesh(new RoundedBoxGeometry(w, h, d, 2, Math.min(r, w / 2, h / 2, d / 2)), material, pos);
 
@@ -283,24 +299,14 @@ function habitacion() {
   for (const x of [1.58, 2.32]) g.add(caja(0.2, 0.02, 0.02, azul, { x, y: 0.5, z: -2.29 }, 0.005));
   g.add(mesh(new THREE.BoxGeometry(0.01, 0.7, 0.01), azul, { x: 1.95, y: 0.4, z: -2.3 }));
 
-  // Cuadro: silueta de cóndor planeando sobre el mueble
+  // Cuadro con el isotipo de la marca sobre el mueble
   const cuadro = new THREE.Group();
   cuadro.add(caja(0.9, 0.62, 0.04, azul, {}, 0.01));
   cuadro.add(mesh(new THREE.PlaneGeometry(0.8, 0.52), mat(C.hueso), { z: 0.021 }));
-  const sil = new THREE.Shape();
-  sil.moveTo(0, 0.05);
-  sil.lineTo(0.08, 0.03);
-  sil.lineTo(0.27, 0.04);
-  for (const [x, y] of [[0.34, 0.06], [0.29, 0.03], [0.35, 0.02], [0.29, 0.0], [0.33, -0.02], [0.26, -0.02]]) sil.lineTo(x, y);
-  sil.lineTo(0.08, -0.03);
-  sil.lineTo(0.03, -0.09);
-  sil.lineTo(-0.03, -0.09);
-  sil.lineTo(-0.08, -0.03);
-  for (const [x, y] of [[-0.26, -0.02], [-0.33, -0.02], [-0.29, 0.0], [-0.35, 0.02], [-0.29, 0.03], [-0.34, 0.06]]) sil.lineTo(x, y);
-  sil.lineTo(-0.27, 0.04);
-  sil.lineTo(-0.08, 0.03);
-  sil.lineTo(0, 0.05);
-  cuadro.add(mesh(new THREE.ShapeGeometry(sil), mat(C.azul), { z: 0.023, y: 0.02 }));
+  const logo = mesh(new THREE.PlaneGeometry(0.44, 0.44),
+    mat(C.hueso, { map: texturaDeImagen('marca/isotipo-trama.svg'), transparent: true, roughness: 0.9 }), { z: 0.023 });
+  logo.castShadow = false;
+  cuadro.add(logo);
   cuadro.position.set(1.95, 1.85, -3.0);
   g.add(cuadro);
 

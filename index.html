@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gryphus — Catálogo</title>
   <meta name="description" content="Macetas, tótems NFC, soportes, impresión 3D a pedido y reparación de notebooks.">
+  <link rel="icon" href="marca/isotipo-simple.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="marca/icono-180.png">
+  <meta name="theme-color" content="#1D355B">
+  <!-- Vista previa al compartir el link (WhatsApp, Instagram, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gryphus — Catálogo 3D">
+  <meta property="og:description" content="Impresión 3D, NFC y servicio técnico. Conocé el catálogo en 3D.">
+  <meta property="og:image" content="https://facunique.github.io/gryphus-catalogo/marca/og-imagen.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <script>
     // Aplica el modo guardado (o el del sistema) antes de pintar, para que no parpadee.
     (function () {
@@ -29,17 +40,21 @@
 </head>
 <body>
   <header class="barra">
-    <span class="marca">
-      <svg viewBox="0 0 64 26" aria-hidden="true"><path d="M32 7 L36 9 L54 9 L58 5 L56 9 L62 7 L57 11 L64 11 L57 13 L61 16 L52 14 L37 15 L34 21 L30 21 L27 15 L12 14 L3 16 L7 13 L0 11 L7 11 L2 7 L8 9 L6 5 L10 9 L28 9 Z"/></svg>
+    <a class="marca" id="ir-inicio" href="./" aria-label="Gryphus, volver al inicio">
+      <img class="logo-en-claro" src="marca/isotipo-terracota.svg" alt="" width="30" height="30">
+      <img class="logo-en-oscuro" src="marca/isotipo-azul.svg" alt="" width="30" height="30">
       Gryphus
-    </span>
+    </a>
     <span class="ayuda" id="ayuda">Tocá un objeto para verlo de cerca · tirá del hilo del foco para cambiar la luz</span>
   </header>
   <button id="cambiar-tema" class="cambiar-tema" type="button">Cambiar a modo oscuro</button>
 
   <main>
     <div id="escena" aria-hidden="true"></div>
-    <div id="cargando" class="cargando">Cargando…</div>
+    <div id="cargando" class="cargando">
+      <img src="marca/isotipo-trama.svg" alt="" width="112" height="112">
+      <span>Cargando…</span>
+    </div>
     <div id="etiqueta" class="etiqueta" hidden></div>
 
     <aside id="panel" class="panel" aria-live="polite" hidden>

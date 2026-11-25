@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gryphus — Marca</title>
+  <meta name="description" content="Manual de marca de Gryphus: isotipo, versiones, paleta y aplicaciones.">
+  <link rel="icon" href="marca/isotipo-simple.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="marca/icono-180.png">
+  <meta property="og:title" content="Gryphus — Marca">
+  <meta property="og:image" content="https://facunique.github.io/gryphus-catalogo/marca/og-imagen.png">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (t !== 'claro' && t !== 'oscuro') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro';
+      document.documentElement.dataset.tema = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap">
+  <style>
+    :root {
+      --hueso: #f0e9da; --azul: #1d355b; --terracota: #ca7957; --celeste: #94b6ef; --azul-profundo: #15284a;
+      --fondo: var(--hueso); --superficie: #f7f2e8; --texto: var(--azul); --texto-suave: rgba(29, 53, 91, 0.74);
+      --linea: rgba(29, 53, 91, 0.16);
+      color-scheme: light;
+    }
+    :root[data-tema="oscuro"] {
+      --fondo: var(--azul-profundo); --superficie: var(--azul); --texto: var(--hueso);
+      --texto-suave: rgba(240, 233, 218, 0.76); --linea: rgba(240, 233, 218, 0.18);
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--fondo); color: var(--texto);
+      font-family: "Nunito", "Segoe UI", system-ui, sans-serif; line-height: 1.5;
+    }
+    a { color: inherit; }
+    .envoltura { max-width: 1040px; margin: 0 auto; padding: 0 20px 64px; }
+    header.barra {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 18px 20px; max-width: 1040px; margin: 0 auto;
+    }
+    .marca-chip {
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 19px;
+      background: var(--texto); color: var(--fondo); border-radius: 999px; padding: 5px 16px 5px 5px; text-decoration: none;
+    }
+    .marca-chip img { width: 30px; height: 30px; display: block; }
+    .solo-oscuro { display: none !important; }
+    :root[data-tema="oscuro"] .solo-claro { display: none !important; }
+    :root[data-tema="oscuro"] .solo-oscuro { display: block !important; }
+    .boton {
+      font: inherit; font-weight: 800; font-size: 15px; text-decoration: none; color: var(--texto);
+      border: 2px solid var(--texto); border-radius: 999px; padding: 6px 16px; background: transparent; cursor: pointer;
+    }
+    .boton:focus-visible, .marca-chip:focus-visible { outline: 3px solid var(--terracota); outline-offset: 3px; }
+
+    .portada { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; padding: 28px 0 40px; }
+    .portada img { width: 220px; height: 220px; }
+    .portada h1 { font-size: clamp(44px, 8vw, 84px); margin: 0; line-height: 1; letter-spacing: -0.01em; }
+    .portada p { font-size: 19px; color: var(--texto-suave); margin: 12px 0 0; max-width: 52ch; }
+    @media (max-width: 640px) {
+      .portada { grid-template-columns: 1fr; justify-items: start; gap: 20px; }
+      .portada img { width: 140px; height: 140px; }
+    }
+
+    section { padding: 36px 0; border-top: 1px solid var(--linea); }
+    h2 { font-size: 26px; margin: 0 0 6px; }
+    .bajada { color: var(--texto-suave); margin: 0 0 22px; max-width: 62ch; }
+    .rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .tarjeta {
+      background: var(--superficie); border: 1px solid var(--linea); border-radius: 18px; padding: 18px;
+    }
+    .tarjeta h3 { font-size: 17px; margin: 12px 0 4px; }
+    .tarjeta p { margin: 0; font-size: 15px; color: var(--texto-suave); }
+    .tarjeta .muestra { display: grid; place-items: center; min-height: 170px; border-radius: 12px; }
+    .tarjeta .muestra img { width: 150px; height: 150px; }
+    .descarga { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 800; }
+
+    .paleta { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+    .color { border-radius: 16px; overflow: hidden; border: 1px solid var(--linea); background: var(--superficie); }
+    .color .parche { height: 92px; display: flex; align-items: flex-end; padding: 10px 12px; font-weight: 800; font-size: 22px; }
+    .color div:last-child { padding: 10px 12px 12px; font-size: 14px; }
+    .color b { display: block; font-size: 16px; }
+    .color code { font-size: 13px; }
+
+    .reglas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .resguardo { position: relative; display: grid; place-items: center; height: 220px; border-radius: 12px;
+      background: repeating-linear-gradient(45deg, transparent 0 8px, rgba(202, 121, 87, 0.16) 8px 9px); }
+    .resguardo .zona { padding: 26px; border: 2px dashed var(--terracota); border-radius: 50%; }
+    .resguardo img { width: 120px; height: 120px; display: block; }
+    .resguardo .cota { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); font-size: 13px; font-weight: 800; color: var(--terracota); }
+    .tamanos { display: flex; align-items: flex-end; gap: 22px; height: 220px; justify-content: center; padding-bottom: 16px; }
+    .tamanos figure { margin: 0; text-align: center; font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+    .tamanos img { display: block; margin: 0 auto 8px; }
+
+    .incorrecto { position: relative; }
+    .incorrecto .muestra { overflow: hidden; }
+    .incorrecto .muestra::after {
+      content: "✕"; position: absolute; top: 12px; right: 14px; width: 30px; height: 30px; display: grid; place-items: center;
+      font-weight: 800; background: var(--terracota); color: var(--azul); border-radius: 50%;
+    }
+    .estirado { transform: scaleX(1.45); }
+    .recoloreado { filter: hue-rotate(150deg) saturate(1.6); }
+    .rotado { transform: rotate(70deg); }
+    .fondo-cargado { background: repeating-linear-gradient(-30deg, #ca7957 0 14px, #94b6ef 14px 28px); }
+
+    /* Aplicaciones */
+    .aplicaciones { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .escena { min-height: 240px; border-radius: 12px; display: grid; place-items: center; padding: 18px; position: relative; overflow: hidden; }
+    .pestana {
+      width: 100%; max-width: 300px; background: #e4dccb; border-radius: 12px 12px 0 0; padding: 10px 10px 0; align-self: start;
+    }
+    .pestana .tab { display: flex; align-items: center; gap: 8px; background: #f7f2e8; border-radius: 10px 10px 0 0;
+      padding: 9px 12px; font-size: 13px; font-weight: 700; color: #1d355b; width: 75%; }
+    .pestana .tab img { width: 16px; height: 16px; }
+    .pestana .url { background: #f7f2e8; height: 34px; border-top: 1px solid #e4dccb; padding: 8px 12px; font-size: 12px; color: rgba(29, 53, 91, 0.7); }
+    .icono-app { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #f0e9da; }
+    .icono-app img { width: 76px; height: 76px; border-radius: 18px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); }
+    .fondo-celu { background: linear-gradient(160deg, #94b6ef, #1d355b 70%); }
+
+    .sticker img { width: 150px; height: 150px; border-radius: 50%; border: 7px solid #fff; transform: rotate(-8deg);
+      box-shadow: 0 10px 24px rgba(29, 53, 91, 0.25); }
+    .mesa { background: linear-gradient(#dcd3c1, #cfc5b1); }
+
+    .totem { width: 150px; background: #f0e9da; border-radius: 18px 18px 6px 6px; padding: 18px 14px 22px; text-align: center;
+      color: #1d355b; box-shadow: 0 14px 26px rgba(29, 53, 91, 0.28); position: relative; }
+    .totem img { width: 92px; height: 92px; display: block; margin: 0 auto 10px; }
+    .totem b { display: block; font-size: 16px; }
+    .totem span { font-size: 12px; font-weight: 700; color: rgba(29, 53, 91, 0.7); }
+    .totem::after { content: ""; position: absolute; left: -10px; right: -10px; bottom: -14px; height: 16px; background: #1d355b; border-radius: 6px; }
+
+    .tarjetas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .tarjeta-personal { width: 200px; aspect-ratio: 85 / 55; border-radius: 10px; padding: 14px; display: flex; flex-direction: column;
+      justify-content: space-between; box-shadow: 0 10px 22px rgba(29, 53, 91, 0.22); }
+    .tarjeta-personal.frente { background: #1d355b; color: #f0e9da; align-items: center; justify-content: center; gap: 6px; }
+    .tarjeta-personal.frente img { width: 58px; height: 58px; }
+    .tarjeta-personal.frente b { font-size: 20px; }
+    .tarjeta-personal.dorso { background: #f0e9da; color: #1d355b; font-size: 11px; }
+    .tarjeta-personal.dorso b { font-size: 14px; display: block; }
+    .tarjeta-personal.dorso .franja { height: 6px; border-radius: 3px; background: linear-gradient(90deg, #1d355b 0 70%, #94b6ef 70% 90%, #ca7957 90%); }
+
+    .perfil { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 16px; padding: 16px 18px; color: #1d355b;
+      box-shadow: 0 8px 20px rgba(29, 53, 91, 0.12); max-width: 300px; width: 100%; }
+    .perfil img { width: 72px; height: 72px; border-radius: 50%; }
+    .perfil b { display: block; font-size: 16px; }
+    .perfil span { font-size: 13px; color: rgba(29, 53, 91, 0.7); }
+
+    footer { padding: 28px 0 0; color: var(--texto-suave); font-size: 14px; border-top: 1px solid var(--linea); }
+  </style>
+</head>
+<body>
+  <header class="barra">
+    <a class="marca-chip" href="./" aria-label="Gryphus, ir al catálogo">
+      <img class="solo-claro" src="marca/isotipo-terracota.svg" alt="">
+      <img class="solo-oscuro" src="marca/isotipo-azul.svg" alt="">
+      Gryphus
+    </a>
+    <a class="boton" href="./">Ver el catálogo 3D</a>
+  </header>
+
+  <main class="envoltura">
+    <div class="portada">
+      <img class="solo-claro" src="marca/isotipo-azul.svg" alt="Isotipo de Gryphus: un cóndor andino planeando, facetado, dentro de un círculo">
+      <img class="solo-oscuro" src="marca/isotipo-terracota.svg" alt="Isotipo de Gryphus: un cóndor andino planeando, facetado, dentro de un círculo">
+      <div>
+        <h1>Gryphus</h1>
+        <p>Un cóndor andino planeando, facetado como una pieza impresa en 3D. El cóndor vuela alto y lejos sin aletear: así queremos que se sientan nuestras piezas, livianas y bien resueltas.</p>
+      </div>
+    </div>
+
+    <section aria-labelledby="t-versiones">
+      <h2 id="t-versiones">Versiones del isotipo</h2>
+      <p class="bajada">Siempre el cóndor dentro del círculo. Cambia la combinación de colores según el fondo donde se apoya.</p>
+      <div class="rejilla">
+        <div class="tarjeta">
+          <div class="muestra" style="background:#f0e9da"><img src="marca/isotipo-azul.svg" alt="Versión azul"></div>
+          <h3>Azul · principal</h3>
+          <p>La de uso general: perfil de redes, ícono, sobre fondos claros.</p>
+          <a class="descarga" href="marca/isotipo-azul.svg" download>Descargar SVG</a>
+        </div>
+        <div class="tarjeta">
+          <div class="muestra" style="background:#1d355b"><img src="marca/isotipo-terracota.svg" alt="Versión terracota"></div>
+          <h3>Terracota · destacada</h3>
+          <p>Para llamar la atención o sobre fondos azules: stickers, packaging, botones.</p>
+          <a class="descarga" href="marca/isotipo-terracota.svg" download>Descargar SVG</a>
+        </div>
+        <div class="tarjeta">
+          <div class="muestra" style="background:#f0e9da"><img src="marca/isotipo-trama.svg" alt="Versión trama"></div>
+          <h3>Trama · editorial</h3>
+          <p>Con trama de puntos, como una impresión. Para cuadros, piezas grandes y fondos lisos.</p>
+          <a class="descarga" href="marca/isotipo-trama.svg" download>Descargar SVG</a>
+        </div>
+        <div class="tarjeta">
+          <div class="muestra" style="background:#f0e9da"><img src="marca/isotipo-simple.svg" alt="Versión simple" style="width:90px;height:90px"></div>
+          <h3>Simple · tamaños chicos</h3>
+          <p>Sin facetas. Por debajo de 48 px las facetas se empastan: favicon, sellos, grabado láser.</p>
+          <a class="descarga" href="marca/isotipo-simple.svg" download>Descargar SVG</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-paleta">
+      <h2 id="t-paleta">Paleta</h2>
+      <p class="bajada">Regla 60-30-10. Cada color tiene un rol, así el color mismo explica qué es cada cosa.</p>
+      <div class="paleta">
+        <div class="color"><div class="parche" style="background:#f0e9da;color:#1d355b">60 %</div><div><b>Hueso</b><code>#F0E9DA</code><br>Fondo y superficies grandes.</div></div>
+        <div class="color"><div class="parche" style="background:#1d355b;color:#f0e9da">30 %</div><div><b>Azul</b><code>#1D355B</code><br>Estructura, texto, el cóndor.</div></div>
+        <div class="color"><div class="parche" style="background:#94b6ef;color:#1d355b">30 %</div><div><b>Celeste</b><code>#94B6EF</code><br>Cielo e información. Nunca en lo que se toca.</div></div>
+        <div class="color"><div class="parche" style="background:#ca7957;color:#1d355b">10 %</div><div><b>Terracota</b><code>#CA7957</code><br>Acción: lo que se toca o pide atención.</div></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-reglas">
+      <h2 id="t-reglas">Espacio y tamaño</h2>
+      <p class="bajada">El círculo necesita aire alrededor para que se lea como sello.</p>
+      <div class="reglas">
+        <div class="tarjeta">
+          <div class="resguardo">
+            <span class="cota">¼ del diámetro</span>
+            <div class="zona"><img src="marca/isotipo-azul.svg" alt=""></div>
+          </div>
+          <h3>Área de resguardo</h3>
+          <p>Dejar libre alrededor del círculo al menos un cuarto de su diámetro. Nada de texto ni bordes adentro de esa zona.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="tamanos">
+            <figure><img src="marca/isotipo-azul.svg" alt="" width="96" height="96">96 px</figure>
+            <figure><img src="marca/isotipo-azul.svg" alt="" width="48" height="48">48 px</figure>
+            <figure><img src="marca/isotipo-simple.svg" alt="" width="32" height="32">32 px</figure>
+            <figure><img src="marca/isotipo-simple.svg" alt="" width="16" height="16">16 px</figure>
+          </div>
+          <h3>Tamaño mínimo</h3>
+          <p>Facetado desde 48 px (15 mm impreso). Más chico, usar la versión simple, hasta 16 px.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-incorrecto">
+      <h2 id="t-incorrecto">Lo que no hay que hacer</h2>
+      <p class="bajada">El cóndor tiene que verse siempre igual para que se reconozca de un vistazo.</p>
+      <div class="rejilla">
+        <div class="tarjeta incorrecto"><div class="muestra" style="background:#f0e9da"><img class="estirado" src="marca/isotipo-azul.svg" alt="Ejemplo incorrecto: logo estirado"></div><h3>No deformar</h3><p>Escalar siempre en proporción.</p></div>
+        <div class="tarjeta incorrecto"><div class="muestra" style="background:#f0e9da"><img class="recoloreado" src="marca/isotipo-terracota.svg" alt="Ejemplo incorrecto: colores cambiados"></div><h3>No cambiar los colores</h3><p>Solo las tres versiones de arriba.</p></div>
+        <div class="tarjeta incorrecto"><div class="muestra" style="background:#f0e9da"><img class="rotado" src="marca/isotipo-azul.svg" alt="Ejemplo incorrecto: logo girado"></div><h3>No girar</h3><p>El cóndor vuela siempre en la misma diagonal.</p></div>
+        <div class="tarjeta incorrecto"><div class="muestra fondo-cargado"><img src="marca/isotipo-trama.svg" alt="Ejemplo incorrecto: sobre un fondo cargado"></div><h3>No usar sobre fondos cargados</h3><p>Fondos lisos de la paleta o fotos tranquilas.</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-aplicaciones">
+      <h2 id="t-aplicaciones">Aplicaciones</h2>
+      <p class="bajada">Ejemplos de cómo se ve la marca en lo que hacemos y usamos todos los días.</p>
+      <div class="aplicaciones">
+        <div class="tarjeta">
+          <div class="escena" style="background:#d8cfbd">
+            <div class="pestana">
+              <div class="tab"><img src="marca/isotipo-simple.svg" alt="">Gryphus — Catálogo</div>
+              <div class="url">facunique.github.io/gryphus-catalogo</div>
+            </div>
+          </div>
+          <h3>Favicon</h3><p>La versión simple en la pestaña del navegador.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena fondo-celu"><div class="icono-app"><img src="marca/icono-180.png" alt="">Gryphus</div></div>
+          <h3>Ícono en el celular</h3><p>Al guardar el catálogo en la pantalla de inicio.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena" style="background:#eef1f6"><div class="perfil"><img src="marca/isotipo-azul.svg" alt=""><div><b>gryphus</b><span>Impresión 3D · NFC · Servicio técnico</span></div></div></div>
+          <h3>Perfil de redes</h3><p>La versión azul: se recorta bien en círculo.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena mesa"><div class="totem"><img src="marca/isotipo-azul.svg" alt=""><b>Acercá tu celular</b><span>y seguinos en Instagram</span></div></div>
+          <h3>Tótem NFC</h3><p>El logo en nuestros propios tótems, impreso en PLA hueso con base azul.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena" style="background:#e9e2d2"><div class="sticker"><img src="marca/isotipo-terracota.svg" alt=""></div></div>
+          <h3>Sticker</h3><p>Terracota con borde blanco de troquel, para pegar en las piezas y el packaging.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena" style="background:#d8cfbd">
+            <div class="tarjetas">
+              <div class="tarjeta-personal frente"><img src="marca/isotipo-terracota.svg" alt=""><b>Gryphus</b></div>
+              <div class="tarjeta-personal dorso"><div><b>Gryphus</b>Impresión 3D · NFC · Servicio técnico</div><div>@gryphus · catálogo en 3D</div><div class="franja"></div></div>
+            </div>
+          </div>
+          <h3>Tarjeta personal</h3><p>Frente azul con el isotipo terracota; dorso hueso con la franja de la paleta.</p>
+        </div>
+        <div class="tarjeta">
+          <div class="escena" style="background:#f0e9da;padding:0"><img src="marca/og-imagen.png" alt="Vista previa del link" style="width:100%;border-radius:10px"></div>
+          <h3>Link compartido</h3><p>Lo que aparece en WhatsApp o Instagram cuando se comparte el catálogo.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>Gryphus · Impresión 3D, NFC y servicio técnico · <a href="./">Ver el catálogo 3D</a></footer>
+  </main>
+</body>
+</html>

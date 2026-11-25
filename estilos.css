@@ -94,7 +94,16 @@ html, body {
   border-radius: 999px;
   transition: background-color 0.6s ease, color 0.6s ease;
 }
-.marca svg { width: 34px; height: 14px; fill: currentColor; }
+.marca {
+  pointer-events: auto;
+  text-decoration: none;
+  padding-left: 5px !important;
+}
+.marca img { width: 30px; height: 30px; display: block; }
+.logo-en-oscuro { display: none !important; }
+:root[data-tema="oscuro"] .logo-en-claro { display: none !important; }
+:root[data-tema="oscuro"] .logo-en-oscuro { display: block !important; }
+.marca:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
 .ayuda {
   font-size: 14px;
   color: var(--texto-suave);
@@ -127,10 +136,13 @@ html, body {
 
 .cargando {
   position: fixed; inset: 0;
-  display: grid; place-items: center;
-  font-size: 18px; color: var(--texto-suave);
-  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  font-size: 16px; font-weight: 700; color: var(--texto-suave);
+  background: var(--fondo);
+  z-index: 8;
 }
+.cargando img { animation: latir 1.6s ease-in-out infinite; border-radius: 50%; }
+@keyframes latir { 50% { transform: scale(0.94); opacity: 0.85; } }
 
 .etiqueta {
   position: fixed;
@@ -449,7 +461,7 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel { animation: none; }
+  .panel, .cargando img { animation: none; }
   .indice-hoja, .indice.abierto .indice-hoja { transition: none; }
   html, body, .panel, .marca { transition: none; }
 }
