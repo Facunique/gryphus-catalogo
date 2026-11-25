@@ -17,6 +17,7 @@ export const PALETA = {
   azul: 0x1d355b,       // 30 %: muebles, marcos, estructura
   terracota: 0xca7957,  // 10 %: acentos, solo en lo que se puede tocar
   huesoOscuro: 0xd7d3cb, // hueso 88 % + azul 12 %
+  celeste: 0x94b6ef,    // dentro del 30 %: cielo, pantallas, luz de luna e información
   azulClaro: 0x717d8e,  // azul 60 % + hueso 40 %
   azulProfundo: 0x142540, // azul 70 % + negro
   terracotaClaro: 0xd9a68b, // terracota 60 % + hueso 40 %
@@ -121,7 +122,7 @@ function soporteCelular() {
   const celu = new THREE.Group();
   celu.add(caja(0.4, 0.8, 0.05, mat(C.azulProfundo), {}, 0.04));
   celu.add(mesh(new THREE.PlaneGeometry(0.34, 0.72),
-    mat(C.hueso, { name: 'pantalla_celular', emissive: C.terracotaClaro, emissiveIntensity: 0.3 }), { z: 0.027 }));
+    mat(C.celeste, { name: 'pantalla_celular', emissive: C.celeste, emissiveIntensity: 0.3 }), { z: 0.027 }));
   celu.position.set(0, 0.47, -0.05);
   celu.rotation.x = -0.36;
   g.add(celu);
@@ -136,7 +137,7 @@ function notebook() {
   const tapa = new THREE.Group();
   tapa.add(caja(1.0, 0.66, 0.035, mat(C.hueso), { y: 0.33 }, 0.015));
   tapa.add(mesh(new THREE.PlaneGeometry(0.9, 0.56),
-    mat(C.azulClaro, { name: 'pantalla_notebook', emissive: C.azulClaro, emissiveIntensity: 0.3 }), { y: 0.33, z: 0.019 }));
+    mat(C.celeste, { name: 'pantalla_notebook', emissive: C.celeste, emissiveIntensity: 0.3 }), { y: 0.33, z: 0.019 }));
   // Llave inglesa en pantalla, por el servicio técnico
   tapa.add(caja(0.3, 0.05, 0.01, mat(C.terracota), { y: 0.33, z: 0.025, rz: 0.6 }));
   tapa.add(mesh(new THREE.TorusGeometry(0.05, 0.02, 8, 20, Math.PI * 1.5), mat(C.terracota), { x: 0.13, y: 0.42, z: 0.025, rz: 0.6 }));
@@ -248,8 +249,8 @@ function habitacion() {
 
   // Silla
   const silla = new THREE.Group();
-  silla.add(caja(0.5, 0.07, 0.48, mat(C.azulClaro), { y: 0.46 }, 0.03));
-  silla.add(caja(0.48, 0.42, 0.06, mat(C.azulClaro), { y: 0.82, z: 0.24 }, 0.03));
+  silla.add(caja(0.5, 0.07, 0.48, mat(C.celeste), { y: 0.46 }, 0.03));
+  silla.add(caja(0.48, 0.42, 0.06, mat(C.celeste), { y: 0.82, z: 0.24 }, 0.03));
   silla.add(mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.4, 12), azul, { y: 0.22 }));
   for (let i = 0; i < 5; i++) {
     const a = (i / 5) * Math.PI * 2;
@@ -260,7 +261,7 @@ function habitacion() {
   g.add(silla);
 
   // Alfombra: región común bajo la zona de trabajo
-  const alfombra = mesh(new THREE.CylinderGeometry(1.25, 1.25, 0.015, 64), mat(C.azulClaro, { roughness: 1 }), { x: -0.6, y: 0.008, z: -1.5 });
+  const alfombra = mesh(new THREE.CylinderGeometry(1.25, 1.25, 0.015, 64), mat(C.celeste, { roughness: 1 }), { x: -0.6, y: 0.008, z: -1.5 });
   alfombra.scale.z = 0.75;
   alfombra.castShadow = false;
   g.add(alfombra);

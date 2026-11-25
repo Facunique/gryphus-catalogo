@@ -5,13 +5,18 @@
   La terracota se reserva para lo que se puede tocar o lo que pide acción
   (similitud de la Gestalt: mismo color = misma función).
 
-  Contrastes (WCAG): azul/hueso 10:1 · azul/terracota 3,7:1 (solo texto
+  Celeste #94B6EF: dentro del 30 %, para "cielo e información" (ventana,
+  pantallas, luna, etiqueta de categoría). Nunca para lo que se toca.
+
+  Contrastes (WCAG): azul/hueso 10:1 · celeste/azul 5,95:1 · celeste/hueso
+  1,7:1 (nunca texto sobre hueso) · azul/terracota 3,7:1 (solo texto
   grande o en negrita de 19 px o más) · hueso/terracota 2,7:1 (nunca texto).
 */
 :root {
   --hueso: #f0e9da;
   --azul: #1d355b;
   --terracota: #ca7957;
+  --celeste: #94b6ef;
   --azul-profundo: #15284a;
 
   --fondo: var(--hueso);
@@ -45,6 +50,8 @@
   --sombra: 0 14px 40px rgba(0, 0, 0, 0.35);
   color-scheme: dark;
 }
+/* En modo oscuro el celeste también sirve para texto (5,95:1 sobre azul) */
+:root[data-tema="oscuro"] .zona-nombre { color: var(--celeste); }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -177,8 +184,8 @@ html, body {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  background: var(--texto);
-  color: var(--superficie);
+  background: var(--celeste);
+  color: var(--azul);
   padding: 4px 10px;
   border-radius: 999px;
 }

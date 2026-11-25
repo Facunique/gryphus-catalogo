@@ -98,11 +98,11 @@ const TEMAS = {
   claro: {
     fondo: 0xf0e9da, cielo: 0xfffaf0, suelo: 0xd9cbb8, hemi: 1.15,
     sol: 0xfff0dc, solI: 1.7, foco: 3.2, vidrio: 1.6, filamento: 2.2,
-    ventana: 0xf0e9da, ventanaI: 0.95, pantalla: 0.3, ambiente: 0.5,
+    ventana: 0x94b6ef, ventanaI: 0.8, pantalla: 0.3, ambiente: 0.5,
   },
   oscuro: {
     fondo: 0x15284a, cielo: 0x3d5a8c, suelo: 0x15284a, hemi: 1.15,
-    sol: 0x7d9bd0, solI: 0.8, foco: 0, vidrio: 0, filamento: 0,
+    sol: 0x94b6ef, solI: 0.75, foco: 0, vidrio: 0, filamento: 0,
     ventana: 0x1d355b, ventanaI: 0.7, pantalla: 1.5, ambiente: 0.1,
   },
 };
