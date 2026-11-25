@@ -96,9 +96,9 @@ function limitesGenerales() {
 
 const TEMAS = {
   claro: {
-    fondo: 0xf6f2e7, cielo: 0xfffaf0, suelo: 0xd9cbb8, hemi: 1.15,
+    fondo: 0xf0e9da, cielo: 0xfffaf0, suelo: 0xd9cbb8, hemi: 1.15,
     sol: 0xfff0dc, solI: 1.7, foco: 3.2, vidrio: 1.6, filamento: 2.2,
-    ventana: 0xf6f2e7, ventanaI: 0.95, pantalla: 0.3, ambiente: 0.5,
+    ventana: 0xf0e9da, ventanaI: 0.95, pantalla: 0.3, ambiente: 0.5,
   },
   oscuro: {
     fondo: 0x15284a, cielo: 0x3d5a8c, suelo: 0x15284a, hemi: 1.15,
@@ -513,9 +513,17 @@ renderer.domElement.addEventListener('pointerup', (ev) => {
 addEventListener('keydown', (ev) => {
   if (ev.key !== 'Escape') return;
   if (ui.nav.classList.contains('abierto')) cerrarHoja();
-  else if (enfocado) volver();
+  else if (enfocado) volverDesdePanel();
 });
-ui.volver.addEventListener('click', () => volver());
+ui.volver.addEventListener('click', () => volverDesdePanel());
+
+// En celular, salir de un producto lleva de nuevo a la lista de productos;
+// en la compu la lista ya está siempre a la vista, así que solo se vuelve a la vista general.
+const esCelular = () => matchMedia('(max-width: 760px)').matches;
+function volverDesdePanel() {
+  volver();
+  if (esCelular()) abrirHoja();
+}
 
 // ---------- Foco con hilo ----------
 
@@ -559,7 +567,7 @@ function encuadre(raiz) {
   // En celular el panel ocupa la parte de abajo: el producto tiene que entrar
   // en el espacio libre entre la barra superior y el panel.
   const ALTO_BARRA = 70;
-  const topePanel = innerHeight - 84 - (ui.panel.offsetHeight || innerHeight * 0.45);
+  const topePanel = innerHeight - 16 - (ui.panel.offsetHeight || innerHeight * 0.45);
   if (innerWidth <= 760) {
     const libre = Math.max(topePanel - ALTO_BARRA, innerHeight * 0.25);
     const medioAngulo = Math.atan(Math.tan(fovV / 2) * (libre / innerHeight));
@@ -611,6 +619,7 @@ function viajar(posicion, objetivo, { inmediato = false, duracion = 1000, seguir
 }
 
 function mostrarPanel(datos) {
+  ui.volver.setAttribute('aria-label', esCelular() ? 'Volver a la lista de productos' : 'Volver a la vista general');
   ui.categoria.textContent = datos.categoria ?? '';
   ui.nombre.textContent = datos.nombre;
   ui.resumen.textContent = datos.resumen ?? '';

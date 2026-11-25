@@ -13,13 +13,13 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 // Paleta de la marca (60-30-10) y tonos derivados mezclándola entre sí, para
 // que todo lo que se ve salga de los mismos tres colores.
 export const PALETA = {
-  crema: 0xf6f2e7,      // 60 %: paredes, piso, superficies grandes
+  hueso: 0xf0e9da,      // 60 %: paredes, piso, superficies grandes
   azul: 0x1d355b,       // 30 %: muebles, marcos, estructura
   terracota: 0xca7957,  // 10 %: acentos, solo en lo que se puede tocar
-  cremaOscuro: 0xdcdbd6, // crema 88 % + azul 12 %
-  azulClaro: 0x748193,  // azul 60 % + crema 40 %
+  huesoOscuro: 0xd7d3cb, // hueso 88 % + azul 12 %
+  azulClaro: 0x717d8e,  // azul 60 % + hueso 40 %
   azulProfundo: 0x142540, // azul 70 % + negro
-  terracotaClaro: 0xdca991, // terracota 60 % + crema 40 %
+  terracotaClaro: 0xd9a68b, // terracota 60 % + hueso 40 %
 };
 const C = PALETA;
 
@@ -67,7 +67,7 @@ function ondasNfc(color) {
 
 function tagNfc() {
   const g = new THREE.Group();
-  g.add(caja(0.62, 0.9, 0.14, mat(C.crema), { y: 0.5 }, 0.08));
+  g.add(caja(0.62, 0.9, 0.14, mat(C.hueso), { y: 0.5 }, 0.08));
   g.add(mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.02, 40), mat(C.terracota), { y: 0.62, z: 0.075, rx: Math.PI / 2 }));
   const ondas = ondasNfc(C.azul);
   ondas.position.set(-0.05, 0.58, 0.09);
@@ -80,8 +80,8 @@ function mesaViva() {
   const g = new THREE.Group();
   g.add(mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.7, 3, 1), mat(C.terracota), { y: 0.35, rz: Math.PI / 2, ry: Math.PI / 2 }));
   const campana = new THREE.Group();
-  campana.add(mesh(new THREE.SphereGeometry(0.13, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat(C.crema)));
-  campana.add(mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.025, 24), mat(C.crema)));
+  campana.add(mesh(new THREE.SphereGeometry(0.13, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), mat(C.hueso)));
+  campana.add(mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.025, 24), mat(C.hueso)));
   campana.add(mesh(new THREE.SphereGeometry(0.03, 12, 8), mat(C.azul), { y: 0.15 }));
   campana.position.set(0, 0.36, 0.2);
   campana.rotation.x = 0.52;
@@ -91,9 +91,9 @@ function mesaViva() {
 
 function soporteAuriculares() {
   const g = new THREE.Group();
-  g.add(mesh(new THREE.CylinderGeometry(0.34, 0.38, 0.08, 40), mat(C.crema), { y: 0.04 }));
-  g.add(mesh(new THREE.CylinderGeometry(0.035, 0.045, 1.05, 16), mat(C.crema), { y: 0.6 }));
-  g.add(caja(0.42, 0.05, 0.12, mat(C.crema), { y: 1.12 }, 0.02));
+  g.add(mesh(new THREE.CylinderGeometry(0.34, 0.38, 0.08, 40), mat(C.hueso), { y: 0.04 }));
+  g.add(mesh(new THREE.CylinderGeometry(0.035, 0.045, 1.05, 16), mat(C.hueso), { y: 0.6 }));
+  g.add(caja(0.42, 0.05, 0.12, mat(C.hueso), { y: 1.12 }, 0.02));
   const auris = new THREE.Group();
   auris.add(mesh(new THREE.TorusGeometry(0.3, 0.035, 12, 40, Math.PI), mat(C.azulClaro)));
   for (const s of [-1, 1]) {
@@ -121,7 +121,7 @@ function soporteCelular() {
   const celu = new THREE.Group();
   celu.add(caja(0.4, 0.8, 0.05, mat(C.azulProfundo), {}, 0.04));
   celu.add(mesh(new THREE.PlaneGeometry(0.34, 0.72),
-    mat(C.crema, { name: 'pantalla_celular', emissive: C.terracotaClaro, emissiveIntensity: 0.3 }), { z: 0.027 }));
+    mat(C.hueso, { name: 'pantalla_celular', emissive: C.terracotaClaro, emissiveIntensity: 0.3 }), { z: 0.027 }));
   celu.position.set(0, 0.47, -0.05);
   celu.rotation.x = -0.36;
   g.add(celu);
@@ -130,11 +130,11 @@ function soporteCelular() {
 
 function notebook() {
   const g = new THREE.Group();
-  g.add(caja(1.0, 0.05, 0.68, mat(C.crema), { y: 0.03 }, 0.02));
+  g.add(caja(1.0, 0.05, 0.68, mat(C.hueso), { y: 0.03 }, 0.02));
   g.add(mesh(new THREE.PlaneGeometry(0.82, 0.36), mat(C.azul), { y: 0.056, z: -0.06, rx: -Math.PI / 2 }));
-  g.add(mesh(new THREE.PlaneGeometry(0.3, 0.14), mat(C.cremaOscuro), { y: 0.056, z: 0.2, rx: -Math.PI / 2 }));
+  g.add(mesh(new THREE.PlaneGeometry(0.3, 0.14), mat(C.huesoOscuro), { y: 0.056, z: 0.2, rx: -Math.PI / 2 }));
   const tapa = new THREE.Group();
-  tapa.add(caja(1.0, 0.66, 0.035, mat(C.crema), { y: 0.33 }, 0.015));
+  tapa.add(caja(1.0, 0.66, 0.035, mat(C.hueso), { y: 0.33 }, 0.015));
   tapa.add(mesh(new THREE.PlaneGeometry(0.9, 0.56),
     mat(C.azulClaro, { name: 'pantalla_notebook', emissive: C.azulClaro, emissiveIntensity: 0.3 }), { y: 0.33, z: 0.019 }));
   // Llave inglesa en pantalla, por el servicio técnico
@@ -157,7 +157,7 @@ function impresora3d() {
   g.add(mesh(new THREE.ConeGeometry(0.03, 0.06, 12), marco, { x: 0.1, y: 0.53, z: -0.08, rx: Math.PI }));
   g.add(mesh(new THREE.BoxGeometry(0.7, 0.03, 0.6), mat(C.azulClaro), { y: 0.12, z: 0.02 }));
   g.add(mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.2, 6), mat(C.terracota), { x: 0.1, y: 0.235, z: 0 }));
-  g.add(mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.1, 32), mat(C.crema), { x: 0.56, y: 0.75, z: -0.25, rz: Math.PI / 2 }));
+  g.add(mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.1, 32), mat(C.hueso), { x: 0.56, y: 0.75, z: -0.25, rz: Math.PI / 2 }));
   return g;
 }
 
@@ -188,17 +188,17 @@ const UBICACION = {
 function habitacion() {
   const g = new THREE.Group();
   g.name = 'habitacion';
-  const crema = mat(C.crema, { roughness: 0.95 });
+  const hueso = mat(C.hueso, { roughness: 0.95 });
   const azul = mat(C.azul);
   const pared = (w, h, d, pos) => {
-    const m = mesh(new THREE.BoxGeometry(w, h, d), crema, pos);
+    const m = mesh(new THREE.BoxGeometry(w, h, d), hueso, pos);
     m.castShadow = false;
     return m;
   };
 
   // Base azul (marco de la "maqueta") y piso
   g.add(caja(6.5, 0.24, 6.5, azul, { x: -0.05, y: -0.2, z: -0.05 }, 0.04));
-  const piso = mesh(new THREE.BoxGeometry(6.2, 0.08, 6.2), mat(C.cremaOscuro, { roughness: 0.9 }), { x: -0.05, y: -0.04, z: -0.05 });
+  const piso = mesh(new THREE.BoxGeometry(6.2, 0.08, 6.2), mat(C.huesoOscuro, { roughness: 0.9 }), { x: -0.05, y: -0.04, z: -0.05 });
   piso.castShadow = false;
   g.add(piso);
   // Tablas del piso, apenas marcadas
@@ -219,10 +219,10 @@ function habitacion() {
   const ventana = new THREE.Group();
   ventana.name = 'ventana';
   const vidrio = mesh(new THREE.PlaneGeometry(1.5, 1.2),
-    mat(C.crema, { name: 'cielo', emissive: C.crema, emissiveIntensity: 0.9, roughness: 1 }), { ry: Math.PI / 2 });
+    mat(C.hueso, { name: 'cielo', emissive: C.hueso, emissiveIntensity: 0.9, roughness: 1 }), { ry: Math.PI / 2 });
   vidrio.castShadow = false;
   ventana.add(vidrio);
-  const luna = mesh(new THREE.CircleGeometry(0.13, 32), mat(C.crema, { emissive: C.crema, emissiveIntensity: 1 }), { x: 0.005, y: 0.28, z: 0.35, ry: Math.PI / 2 });
+  const luna = mesh(new THREE.CircleGeometry(0.13, 32), mat(C.hueso, { emissive: C.hueso, emissiveIntensity: 1 }), { x: 0.005, y: 0.28, z: 0.35, ry: Math.PI / 2 });
   luna.name = 'luna';
   luna.visible = false;
   ventana.add(luna);
@@ -244,7 +244,7 @@ function habitacion() {
     g.add(caja(0.05, 0.71, 0.7, azul, { x, y: 0.355, z: -2.62 }, 0.01));
   }
   g.add(caja(0.5, 0.4, 0.66, azul, { x: 0.2, y: 0.5, z: -2.62 }, 0.01)); // cajonera
-  g.add(caja(0.16, 0.02, 0.02, mat(C.crema), { x: 0.2, y: 0.55, z: -2.28 }, 0.005));
+  g.add(caja(0.16, 0.02, 0.02, mat(C.hueso), { x: 0.2, y: 0.55, z: -2.28 }, 0.005));
 
   // Silla
   const silla = new THREE.Group();
@@ -264,7 +264,7 @@ function habitacion() {
   alfombra.scale.z = 0.75;
   alfombra.castShadow = false;
   g.add(alfombra);
-  const centro = mesh(new THREE.CylinderGeometry(1.08, 1.08, 0.017, 64), mat(C.crema, { roughness: 1 }), { x: -0.6, y: 0.01, z: -1.5 });
+  const centro = mesh(new THREE.CylinderGeometry(1.08, 1.08, 0.017, 64), mat(C.hueso, { roughness: 1 }), { x: -0.6, y: 0.01, z: -1.5 });
   centro.scale.z = 0.75;
   centro.castShadow = false;
   g.add(centro);
@@ -273,11 +273,11 @@ function habitacion() {
   g.add(caja(1.7, 0.04, 0.34, azul, { x: -0.75, y: 1.6, z: -2.86 }, 0.01));
   for (const x of [-1.5, 0]) g.add(caja(0.04, 0.16, 0.26, azul, { x, y: 1.5, z: -2.9 }, 0.01));
   // Un par de libros para que el estante se lea como estante
-  const libros = [[C.azulClaro, 0.3], [C.crema, 0.26], [C.azul, 0.28]];
+  const libros = [[C.azulClaro, 0.3], [C.hueso, 0.26], [C.azul, 0.28]];
   libros.forEach(([color, h], i) => g.add(caja(0.05, h, 0.22, mat(color), { x: -0.02 + i * 0.06, y: 1.62 + h / 2, z: -2.86 }, 0.008)));
 
   // Mueble de impresión 3D
-  g.add(caja(1.5, 0.78, 0.7, mat(C.cremaOscuro), { x: 1.95, y: 0.4, z: -2.65 }, 0.02));
+  g.add(caja(1.5, 0.78, 0.7, mat(C.huesoOscuro), { x: 1.95, y: 0.4, z: -2.65 }, 0.02));
   g.add(caja(1.54, 0.04, 0.74, azul, { x: 1.95, y: 0.8, z: -2.65 }, 0.01));
   for (const x of [1.58, 2.32]) g.add(caja(0.2, 0.02, 0.02, azul, { x, y: 0.5, z: -2.29 }, 0.005));
   g.add(mesh(new THREE.BoxGeometry(0.01, 0.7, 0.01), azul, { x: 1.95, y: 0.4, z: -2.3 }));
@@ -285,7 +285,7 @@ function habitacion() {
   // Cuadro: silueta de cóndor planeando sobre el mueble
   const cuadro = new THREE.Group();
   cuadro.add(caja(0.9, 0.62, 0.04, azul, {}, 0.01));
-  cuadro.add(mesh(new THREE.PlaneGeometry(0.8, 0.52), mat(C.crema), { z: 0.021 }));
+  cuadro.add(mesh(new THREE.PlaneGeometry(0.8, 0.52), mat(C.hueso), { z: 0.021 }));
   const sil = new THREE.Shape();
   sil.moveTo(0, 0.05);
   sil.lineTo(0.08, 0.03);
@@ -321,7 +321,7 @@ function foco() {
     [0, -0.27], [0.03, -0.265], [0.075, -0.23], [0.095, -0.17], [0.09, -0.1], [0.06, -0.06], [0.035, -0.04], [0.035, -0.035],
   ].map(([x, y]) => new THREE.Vector2(x, y));
   const vidrio = mesh(new THREE.LatheGeometry(perfil, 32), new THREE.MeshStandardMaterial({
-    name: 'foco_vidrio', color: C.crema, emissive: 0xffd2a8, emissiveIntensity: 1.6, transparent: true, opacity: 0.85, roughness: 0.2,
+    name: 'foco_vidrio', color: C.hueso, emissive: 0xffd2a8, emissiveIntensity: 1.6, transparent: true, opacity: 0.85, roughness: 0.2,
   }));
   vidrio.name = 'foco_vidrio';
   vidrio.castShadow = false;
@@ -333,7 +333,7 @@ function foco() {
   // Hilo con la cuenta terracota en la punta: lo único "tocable" del foco tiene el color de acento
   const hilo = new THREE.Group();
   hilo.name = 'foco_hilo';
-  hilo.add(mesh(new THREE.CylinderGeometry(0.0035, 0.0035, 0.5, 6), mat(C.cremaOscuro), { y: -0.25 }));
+  hilo.add(mesh(new THREE.CylinderGeometry(0.0035, 0.0035, 0.5, 6), mat(C.huesoOscuro), { y: -0.25 }));
   hilo.add(mesh(new THREE.SphereGeometry(0.03, 16, 12).scale(1, 1.3, 1), mat(C.terracota), { y: -0.52 }));
   hilo.position.set(0.045, -0.02, 0);
   g.add(hilo);
@@ -359,10 +359,10 @@ export function construirCondor() {
   const g = new THREE.Group();
   g.name = 'mascota_condor';
   const plumaje = mat(C.azul, { roughness: 0.85 });
-  const blanco = mat(C.crema, { roughness: 0.95 });
+  const blanco = mat(C.hueso, { roughness: 0.95 });
   const piel = mat(C.azulClaro, { roughness: 0.6 });
-  const pico = mat(C.cremaOscuro, { roughness: 0.5 });
-  const parcheMat = mat(C.crema, { roughness: 0.95, side: THREE.DoubleSide });
+  const pico = mat(C.huesoOscuro, { roughness: 0.5 });
+  const parcheMat = mat(C.hueso, { roughness: 0.95, side: THREE.DoubleSide });
 
   // Cuerpo y cola en abanico
   g.add(mesh(new THREE.SphereGeometry(1, 32, 20).scale(0.24, 0.22, 0.5), plumaje));

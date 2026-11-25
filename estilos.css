@@ -1,30 +1,30 @@
 /*
   Paleta de la marca con la regla 60-30-10:
-    Modo claro   60 % crema  · 30 % azul  · 10 % terracota
-    Modo oscuro  60 % azul   · 30 % crema · 10 % terracota
+    Modo claro   60 % hueso  · 30 % azul  · 10 % terracota
+    Modo oscuro  60 % azul   · 30 % hueso · 10 % terracota
   La terracota se reserva para lo que se puede tocar o lo que pide acción
   (similitud de la Gestalt: mismo color = misma función).
 
-  Contrastes (WCAG): azul/crema 11:1 · azul/terracota 3,7:1 (solo texto
-  grande o en negrita de 19 px o más) · crema/terracota 2,9:1 (nunca texto).
+  Contrastes (WCAG): azul/hueso 10:1 · azul/terracota 3,7:1 (solo texto
+  grande o en negrita de 19 px o más) · hueso/terracota 2,7:1 (nunca texto).
 */
 :root {
-  --crema: #f6f2e7;
+  --hueso: #f0e9da;
   --azul: #1d355b;
   --terracota: #ca7957;
   --azul-profundo: #15284a;
 
-  --fondo: var(--crema);
-  --superficie: var(--crema);
+  --fondo: var(--hueso);
+  --superficie: var(--hueso);
   --texto: var(--azul);
   --texto-suave: rgba(29, 53, 91, 0.74);
   --borde: var(--azul);
   --linea: rgba(29, 53, 91, 0.18);
   --acento: var(--terracota);
   --sobre-acento: var(--azul);
-  --chip: rgba(246, 242, 231, 0.94);
+  --chip: rgba(240, 233, 218, 0.94);
   --chip-activo: var(--azul);
-  --chip-activo-texto: var(--crema);
+  --chip-activo-texto: var(--hueso);
   --sombra: 0 14px 40px rgba(29, 53, 91, 0.16);
 
   --radio: 18px;
@@ -35,12 +35,12 @@
 :root[data-tema="oscuro"] {
   --fondo: var(--azul-profundo);
   --superficie: var(--azul);
-  --texto: var(--crema);
-  --texto-suave: rgba(246, 242, 231, 0.76);
-  --borde: var(--crema);
-  --linea: rgba(246, 242, 231, 0.2);
+  --texto: var(--hueso);
+  --texto-suave: rgba(240, 233, 218, 0.76);
+  --borde: var(--hueso);
+  --linea: rgba(240, 233, 218, 0.2);
   --chip: rgba(29, 53, 91, 0.94);
-  --chip-activo: var(--crema);
+  --chip-activo: var(--hueso);
   --chip-activo-texto: var(--azul);
   --sombra: 0 14px 40px rgba(0, 0, 0, 0.35);
   color-scheme: dark;
@@ -163,9 +163,13 @@ html, body {
   to   { opacity: 1; transform: translate(0, -50%); }
 }
 /* Región común: el encabezado agrupa volver + categoría; la lista va separada */
-.panel-cabecera { display: flex; align-items: center; gap: 8px; }
-.panel-cabecera .categoria { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.panel-cabecera { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+/* Volver y las flechas siempre en la misma fila; la categoría baja si no entra */
+.panel-cabecera .volver { order: 1; }
+.panel-cabecera .pasar { order: 2; }
+.panel-cabecera .categoria { order: 3; white-space: nowrap; }
 .volver { flex-shrink: 0; }
+.solo-celu { display: none; }
 .panel h1 { margin: 14px 0 8px; font-size: 28px; line-height: 1.1; }
 .categoria {
   margin: 0;
@@ -314,9 +318,9 @@ html, body {
   .panel {
     top: auto;
     right: 16px; left: 16px;
-    bottom: 84px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
     width: auto;
-    max-height: 52vh;
+    max-height: 56vh;
     padding: 14px 16px 16px;
     font-size: 15px;
     transform: none;
@@ -335,6 +339,8 @@ html, body {
 
   /* Índice: un botón abajo que abre la lista completa como hoja */
   .indice { padding: 0; overflow: visible; }
+  /* Con un producto abierto, "← Productos" del panel reemplaza a este botón */
+  .panel:not([hidden]) ~ .indice .abrir-indice { display: none; }
   .indice .abrir-indice {
     display: inline-flex;
     align-items: center;
@@ -431,6 +437,8 @@ html, body {
   .indice .largo { display: inline; }
   .flecha { width: 40px; height: 40px; }
   .volver { padding: 6px 12px; }
+  .solo-compu { display: none; }
+  .solo-celu { display: inline; }
 }
 
 @media (prefers-reduced-motion: reduce) {
