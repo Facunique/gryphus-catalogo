@@ -1,0 +1,121 @@
+{
+  "marca": "Gryphus",
+  "contacto": {
+    "whatsapp": "",
+    "instagram": ""
+  },
+  "zonas": [
+    {
+      "id": "escritorio",
+      "nombre": "Escritorio"
+    },
+    {
+      "id": "nfc",
+      "nombre": "NFC"
+    },
+    {
+      "id": "impresion",
+      "nombre": "Impresión 3D"
+    }
+  ],
+  "productos": [
+    {
+      "id": "prod_soporte_auriculares",
+      "zona": "escritorio",
+      "corto": "Auriculares",
+      "nombre": "Soporte de auriculares",
+      "categoria": "Escritorio",
+      "resumen": "Soporte de escritorio para auriculares, estable y con base antideslizante.",
+      "detalles": [
+        "Para auriculares de vincha",
+        "Base con peso y gomas",
+        "Personalizable con nombre o logo"
+      ],
+      "precio": "Consultar"
+    },
+    {
+      "id": "prod_notebook",
+      "zona": "escritorio",
+      "corto": "Notebooks",
+      "nombre": "Reparación de notebooks",
+      "categoria": "Servicio técnico",
+      "resumen": "Diagnóstico, limpieza y reparación de notebooks.",
+      "detalles": [
+        "Limpieza interna y cambio de pasta térmica",
+        "Cambio de disco a SSD y ampliación de RAM",
+        "Reinstalación y puesta a punto"
+      ],
+      "precio": "Presupuesto sin cargo"
+    },
+    {
+      "id": "prod_soporte_celular",
+      "zona": "escritorio",
+      "corto": "Celular",
+      "nombre": "Soporte de celular",
+      "categoria": "Escritorio",
+      "resumen": "Soporte inclinado para el celular, con hueco para el cable de carga.",
+      "detalles": [
+        "Sirve en vertical y en horizontal",
+        "Pasacable para cargar mientras lo usás",
+        "Se puede sumar un tag NFC"
+      ],
+      "precio": "Consultar"
+    },
+    {
+      "id": "prod_tag_nfc",
+      "zona": "nfc",
+      "corto": "Tags NFC",
+      "nombre": "Tótems y tags NFC",
+      "categoria": "NFC",
+      "resumen": "Acercás el celular y abre tu Instagram, tu carta, tu WiFi o lo que quieras. El destino se cambia cuando quieras, sin reimprimir.",
+      "detalles": [
+        "Chip NTAG213/215 integrado en la pieza",
+        "Logo y texto personalizados",
+        "Destino editable desde nuestro panel"
+      ],
+      "precio": "Consultar"
+    },
+    {
+      "id": "prod_mesa_viva",
+      "zona": "nfc",
+      "corto": "Mesa Viva",
+      "nombre": "Mesa Viva",
+      "categoria": "NFC",
+      "resumen": "Llamador de mozo con NFC: el cliente apoya el celular en el tótem de la mesa y el aviso llega al panel del mostrador.",
+      "detalles": [
+        "Sin app ni instalación para el cliente",
+        "Llamar al mozo o pedir la cuenta",
+        "Panel de mostrador con sonido, luz y vibración"
+      ],
+      "precio": "Consultar"
+    },
+    {
+      "id": "prod_maceta",
+      "zona": "impresion",
+      "corto": "Macetas",
+      "nombre": "Macetas impresas",
+      "categoria": "Impresión 3D",
+      "resumen": "Macetas con diseño propio, impresas en PLA. Varias formas, tamaños y colores.",
+      "detalles": [
+        "Con o sin plato y orificio de drenaje",
+        "Tamaños de 6 a 14 cm",
+        "Colores a elección"
+      ],
+      "precio": "Consultar"
+    },
+    {
+      "id": "prod_impresion_3d",
+      "zona": "impresion",
+      "corto": "A pedido",
+      "nombre": "Impresión 3D a pedido",
+      "categoria": "Impresión 3D",
+      "resumen": "Traés tu idea o tu archivo y lo imprimimos. También diseñamos la pieza desde cero.",
+      "detalles": [
+        "PLA, PETG y TPU",
+        "Repuestos, regalos, prototipos",
+        "Diseño 3D a medida"
+      ],
+      "precio": "Según la pieza"
+    }
+  ]
+}

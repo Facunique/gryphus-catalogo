@@ -1,0 +1,316 @@
+/*
+  Paleta de la marca con la regla 60-30-10:
+    Modo claro   60 % crema  · 30 % azul  · 10 % terracota
+    Modo oscuro  60 % azul   · 30 % crema · 10 % terracota
+  La terracota se reserva para lo que se puede tocar o lo que pide acción
+  (similitud de la Gestalt: mismo color = misma función).
+
+  Contrastes (WCAG): azul/crema 11:1 · azul/terracota 3,7:1 (solo texto
+  grande o en negrita de 19 px o más) · crema/terracota 2,9:1 (nunca texto).
+*/
+:root {
+  --crema: #f6f2e7;
+  --azul: #1d355b;
+  --terracota: #ca7957;
+  --azul-profundo: #15284a;
+
+  --fondo: var(--crema);
+  --superficie: var(--crema);
+  --texto: var(--azul);
+  --texto-suave: rgba(29, 53, 91, 0.74);
+  --borde: var(--azul);
+  --linea: rgba(29, 53, 91, 0.18);
+  --acento: var(--terracota);
+  --sobre-acento: var(--azul);
+  --chip: rgba(246, 242, 231, 0.94);
+  --chip-activo: var(--azul);
+  --chip-activo-texto: var(--crema);
+  --sombra: 0 14px 40px rgba(29, 53, 91, 0.16);
+
+  --radio: 18px;
+  --fuente: "Nunito", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+
+:root[data-tema="oscuro"] {
+  --fondo: var(--azul-profundo);
+  --superficie: var(--azul);
+  --texto: var(--crema);
+  --texto-suave: rgba(246, 242, 231, 0.76);
+  --borde: var(--crema);
+  --linea: rgba(246, 242, 231, 0.2);
+  --chip: rgba(29, 53, 91, 0.94);
+  --chip-activo: var(--crema);
+  --chip-activo-texto: var(--azul);
+  --sombra: 0 14px 40px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente);
+  overflow: hidden;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+#escena { position: fixed; inset: 0; }
+#escena canvas { display: block; touch-action: none; }
+
+/* ---------- Barra superior ---------- */
+.barra {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  z-index: 3;
+  pointer-events: none;
+}
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  background: var(--texto);
+  color: var(--fondo);
+  padding: 6px 16px 6px 12px;
+  border-radius: 999px;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+.marca svg { width: 34px; height: 14px; fill: currentColor; }
+.ayuda {
+  font-size: 14px;
+  color: var(--texto-suave);
+  background: var(--chip);
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: opacity 0.3s, background-color 0.6s ease;
+}
+
+/* Alternativa accesible al foco 3D: invisible hasta que recibe el foco del teclado */
+.cambiar-tema {
+  position: fixed;
+  top: 64px; right: 24px;
+  z-index: 5;
+  font: inherit;
+  font-weight: 700;
+  background: var(--superficie);
+  color: var(--texto);
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+.cambiar-tema:not(:focus-visible) {
+  clip-path: inset(50%);
+  width: 1px; height: 1px;
+  overflow: hidden;
+  padding: 0; border: 0;
+}
+
+.cargando {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  font-size: 18px; color: var(--texto-suave);
+  z-index: 2;
+}
+
+.etiqueta {
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+  transform: translate(-50%, -150%);
+  background: var(--texto);
+  color: var(--fondo);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ---------- Panel de detalle ---------- */
+.panel {
+  position: fixed;
+  z-index: 4;
+  top: 50%;
+  right: 32px;
+  transform: translateY(-50%);
+  width: min(380px, calc(100vw - 32px));
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  background: var(--superficie);
+  color: var(--texto);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 22px 24px 26px;
+  animation: entrar 0.45s ease-out;
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+@keyframes entrar {
+  from { opacity: 0; transform: translate(24px, -50%); }
+  to   { opacity: 1; transform: translate(0, -50%); }
+}
+/* Región común: el encabezado agrupa volver + categoría; la lista va separada */
+.panel-cabecera { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.panel h1 { margin: 14px 0 8px; font-size: 28px; line-height: 1.1; }
+.categoria {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--texto);
+  color: var(--superficie);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.resumen { margin: 0 0 16px; line-height: 1.5; color: var(--texto-suave); }
+.detalles { margin: 0 0 18px; padding: 0; list-style: none; }
+.detalles li {
+  position: relative;
+  padding: 7px 0 7px 22px;
+  border-top: 1px solid var(--linea);
+}
+.detalles li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 15px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--acento);
+}
+.precio { font-weight: 800; font-size: 18px; margin: 0 0 16px; }
+.volver, .cta {
+  font: inherit;
+  font-weight: 800;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.volver {
+  font-size: 15px;
+  background: transparent;
+  border: 2px solid var(--borde);
+  color: var(--texto);
+  padding: 5px 14px;
+}
+.volver:hover { background: var(--linea); }
+.cta {
+  display: inline-block;
+  font-size: 19px;
+  background: var(--acento);
+  border: 2px solid var(--acento);
+  color: var(--sobre-acento);
+  padding: 9px 20px;
+}
+.cta:hover { filter: brightness(1.06); }
+
+/* ---------- Índice de productos agrupado por zona ---------- */
+.indice {
+  position: fixed;
+  z-index: 3;
+  left: 0; right: 0; bottom: 0;
+  padding: 14px 16px 18px;
+  overflow-x: auto;
+}
+.indice > ul {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; padding: 0;
+  list-style: none;
+  min-width: max-content;
+}
+.indice > ul { gap: 10px !important; }
+/* Región común: cada zona es una "bandeja" que agrupa sus productos */
+.zona {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--chip);
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  padding: 5px 6px 5px 14px;
+  box-shadow: var(--sombra);
+  transition: background-color 0.6s ease;
+}
+.zona-nombre {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-right: 2px;
+}
+.zona ul { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.indice button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--chip);
+  color: var(--texto);
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.indice button:hover { box-shadow: inset 0 -3px 0 var(--acento); }
+.indice button[aria-current="true"] {
+  background: var(--chip-activo);
+  color: var(--chip-activo-texto);
+  box-shadow: 0 0 0 3px var(--acento);
+}
+.indice button:focus-visible,
+.volver:focus-visible, .cta:focus-visible, .cambiar-tema:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 3px;
+}
+
+/* ---------- Celular: el panel es una hoja desde abajo ---------- */
+@media (max-width: 760px) {
+  .barra { padding: 14px 16px; }
+  .ayuda { display: none; }
+  .cambiar-tema { top: 60px; right: 16px; }
+  .panel {
+    top: auto;
+    right: 16px; left: 16px;
+    bottom: 84px;
+    width: auto;
+    max-height: 52vh;
+    padding: 14px 16px 16px;
+    font-size: 15px;
+    transform: none;
+    animation-name: subir;
+  }
+  @keyframes subir {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .panel h1 { font-size: 21px; margin: 10px 0 6px; }
+  .resumen { margin-bottom: 8px; line-height: 1.4; }
+  .detalles { margin-bottom: 10px; }
+  .detalles li { padding: 4px 0 4px 20px; }
+  .detalles li::before { top: 11px; }
+  .precio { font-size: 16px; margin-bottom: 10px; }
+  .indice > ul { justify-content: flex-start; gap: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel { animation: none; }
+  html, body, .panel, .marca { transition: none; }
+}

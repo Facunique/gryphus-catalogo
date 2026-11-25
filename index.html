@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gryphus — Catálogo</title>
+  <meta name="description" content="Macetas, tótems NFC, soportes, impresión 3D a pedido y reparación de notebooks.">
+  <script>
+    // Aplica el modo guardado (o el del sistema) antes de pintar, para que no parpadee.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (t !== 'claro' && t !== 'oscuro') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro';
+      document.documentElement.dataset.tema = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="barra">
+    <span class="marca">
+      <svg viewBox="0 0 64 26" aria-hidden="true"><path d="M32 7 L36 9 L54 9 L58 5 L56 9 L62 7 L57 11 L64 11 L57 13 L61 16 L52 14 L37 15 L34 21 L30 21 L27 15 L12 14 L3 16 L7 13 L0 11 L7 11 L2 7 L8 9 L6 5 L10 9 L28 9 Z"/></svg>
+      Gryphus
+    </span>
+    <span class="ayuda" id="ayuda">Tocá un objeto para verlo de cerca · tirá del hilo del foco para cambiar la luz</span>
+  </header>
+  <button id="cambiar-tema" class="cambiar-tema" type="button">Cambiar a modo oscuro</button>
+
+  <main>
+    <div id="escena" aria-hidden="true"></div>
+    <div id="cargando" class="cargando">Cargando…</div>
+    <div id="etiqueta" class="etiqueta" hidden></div>
+
+    <aside id="panel" class="panel" aria-live="polite" hidden>
+      <div class="panel-cabecera">
+        <button id="volver" class="volver" type="button" aria-label="Volver a la vista general">← Volver</button>
+        <p id="panel-categoria" class="categoria"></p>
+      </div>
+      <h1 id="panel-nombre"></h1>
+      <p id="panel-resumen" class="resumen"></p>
+      <ul id="panel-detalles" class="detalles"></ul>
+      <p id="panel-precio" class="precio"></p>
+      <a id="panel-cta" class="cta" href="#" target="_blank" rel="noopener" hidden>Consultar por WhatsApp</a>
+    </aside>
+
+    <!-- Lista accesible y sin 3D, agrupada por zona: sirve para teclado, lectores de pantalla, buscadores y equipos sin WebGL -->
+    <nav class="indice" aria-label="Productos">
+      <ul id="indice"></ul>
+    </nav>
+  </main>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
